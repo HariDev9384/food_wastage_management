@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "266507887450",
+    "project_id": "food-wastage-management-b92ce",
+    "storage_bucket": "food-wastage-management-b92ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266507887450:android:6d7b87071b845b7d754963",
+        "android_client_info": {
+          "package_name": "com.example.food_wastage_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266507887450-8avvqlm9c91bj4aumdpkvnql7jrf4jnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_wastage_management",
+            "certificate_hash": "85f93a449e1382a59963cd4cd909d1a2c8b4259b"
+          }
+        },
+        {
+          "client_id": "266507887450-98nms5eju2vvmcq7ibmme0mtf6k3ospv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcOb9HDqKsEipZlUCX_yYOO8eH4G7jC3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266507887450-98nms5eju2vvmcq7ibmme0mtf6k3ospv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
