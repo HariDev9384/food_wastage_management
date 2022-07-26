@@ -5,16 +5,16 @@ import 'package:provider/provider.dart';
 class confirmpassiconprovider with ChangeNotifier{
   bool _confirmActive=true;
   bool get confirmActive=>_confirmActive;
-  var _confirmpasseye=Icon(MyFlutterApp.visibility);
+  var _confirmpasseye=Icon(Icons.visibility);
   Icon get confirmpasseye=>_confirmpasseye;
   confirmpassenable(){
     _confirmActive=true;
-    _confirmpasseye=Icon(MyFlutterApp.visibility);
+    _confirmpasseye=Icon(Icons.visibility);
     notifyListeners();
   }
   confirmpassdisable(){
     _confirmActive=false;
-    _confirmpasseye=Icon(MyFlutterApp.visibility_off);
+    _confirmpasseye=Icon(Icons.visibility_off);
     notifyListeners();
   }
   @override

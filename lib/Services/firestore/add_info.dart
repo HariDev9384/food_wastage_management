@@ -1,25 +1,46 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 class Info{
-  var rest_name,user_pass,doj,username,email;
+  var Full_name,user_pass,dob,username,email,role;
   dynamic mobile_no;
   Info({
-    required  this.rest_name,
+    required  this.Full_name,
     required this.mobile_no,
     required this.user_pass,
-    required this.doj,
+    required this.dob,
+    required this.role,
     required this.email,
+
+
     required this.username});
    final FirebaseFirestore _firestore=FirebaseFirestore.instance;
+  //  final d=_firestore.collection('users').get().then(
+  //   (QuerySnapshot snapshot){
+  //     snapshot.docs.map((doc) => doc.id);
+  //   }
+  //  );
 
-  void add_res_data(){
-      _firestore.collection("users").add({
-     'restaurant name':rest_name,
-     'Mobile Number':mobile_no,
-     'User Password':user_pass,
-     'User Name':username,
-     'Date of Joining':doj
-      }).then((value) => print(value.id));
-    }
+  void add_donors_data(){
+      _firestore.collection("users").doc('wEw6h6kPPfzUCZsGUEeQ').collection('donors').add({
+            'restaurant name':Full_name,
+            'Mobile Number':mobile_no,
+            'User Password':user_pass,
+            'User Name':username,
+            'Date of Birth':dob,
+            'role':role
+      });
+      }
+  void add_recipient_data(){
+      _firestore.collection("users").doc('wEw6h6kPPfzUCZsGUEeQ').collection('recipients').add({
+            'restaurant name':Full_name,
+            'Mobile Number':mobile_no,
+            'User Password':user_pass,
+            'User Name':username,
+            'Date of Birth':dob,
+            'role':role
+      });
+      }
+
 }
