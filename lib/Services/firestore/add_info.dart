@@ -22,25 +22,16 @@ class Info{
   //   }
   //  );
 
-  void add_donors_data(){
-      _firestore.collection("users").doc('wEw6h6kPPfzUCZsGUEeQ').collection('donors').add({
+  void add_data(){
+      _firestore.collection("users").add({
             'restaurant name':Full_name,
             'Mobile Number':mobile_no,
             'User Password':user_pass,
             'User Name':username,
             'Date of Birth':dob,
+            'gmail':email,
             'role':role
       });
-      }
-  void add_recipient_data(){
-      _firestore.collection("users").doc('wEw6h6kPPfzUCZsGUEeQ').collection('recipients').add({
-            'restaurant name':Full_name,
-            'Mobile Number':mobile_no,
-            'User Password':user_pass,
-            'User Name':username,
-            'Date of Birth':dob,
-            'role':role
-      });
-      }
+  }
 
 }

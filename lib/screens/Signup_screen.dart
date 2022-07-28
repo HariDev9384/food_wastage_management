@@ -277,7 +277,7 @@ class Signup_Screen extends StatelessWidget {
                             ),
                             color: Colors.transparent,
                             onPressed: () async {
-                              if(usertypes.donor){
+                              
                               Info(
                                 Full_name: variables.FullName,
                                 dob: variables.DoB,
@@ -285,19 +285,9 @@ class Signup_Screen extends StatelessWidget {
                                 user_pass: variables.Password,
                                 mobile_no:variables.MobileNumber,
                                 username: variables.UserName,
-                                role: 'donor'
-                              ).add_donors_data();
-                              }else if(usertypes.recipient){
-                                Info(
-                                Full_name: variables.FullName,
-                                dob: variables.DoB,
-                                email: variables.Email,
-                                user_pass: variables.Password,
-                                mobile_no:variables.MobileNumber,
-                                username: variables.UserName,
-                                role: 'recipient'
-                              ).add_recipient_data();
-                              }
+                                role: usertypes.donor?'donor':'recipient'
+                              ).add_data();
+                            
                               // }else if(usertypes.recipient){
                               // Info(
                               //   Full_name: variables.FullName,
