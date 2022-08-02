@@ -34,6 +34,7 @@ class Signup_Screen extends StatelessWidget {
             centerTitle: true,
             elevation: 0,
             backgroundColor: Color(0xff5d74c7),
+            //backgroundColor: Colors.blueAccent,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: ()=>Navigator.of(context).pushReplacementNamed('/login'),
@@ -43,11 +44,13 @@ class Signup_Screen extends StatelessWidget {
             builder: (context, usertypes, child) => 
              SingleChildScrollView(
               child: Container(
-                height: height*0.88,
+                height: height/1,
                 //color: Colors.white24,
                 decoration: BoxDecoration(
                   color: Color(0xff5d74c7),
+              
                   image:DecorationImage(
+                    fit: BoxFit.fitHeight,
                     //colorFilter: ColorFilter.mode(Colors.yellow, BlendMode.hue),
                     image: AssetImage('Assets/BG.png',)
                   ),
@@ -58,8 +61,8 @@ class Signup_Screen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: height*0.76,
-                      //color: Colors.lightGreen,
+                      height: height*0.77,
+                      
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -94,7 +97,13 @@ class Signup_Screen extends StatelessWidget {
                                                                   
                                       ),
                                       child: Center(
-                                        child: Text('Recipient'),
+                                        child: Text('Recipient',
+                                        style: TextStyle(
+                                          color: (users.recipient)?Colors.white:Colors.black26,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -108,7 +117,7 @@ class Signup_Screen extends StatelessWidget {
                                   }
                                 },
                                 child: ClipRRect(
-
+              
                                   child: BackdropFilter(
                                     filter: ImageFilter.blur(
                                       sigmaX: 7,
@@ -118,7 +127,13 @@ class Signup_Screen extends StatelessWidget {
                                       height: 100,
                                       width: 150,
                                       child: Center(
-                                        child: Text('Donor'),
+                                        child: Text('Donor',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: (users.donor)?Colors.white:Colors.black26,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                        ),
                                       ),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -131,6 +146,7 @@ class Signup_Screen extends StatelessWidget {
                               ) 
                             ],
                           ),
+                          SizedBox(height: 15,),
                           ClipRRect(
                             
                             child: BackdropFilter(
@@ -139,10 +155,13 @@ class Signup_Screen extends StatelessWidget {
                                 sigmaY: 7
                                ),
                               child: Container(
-                                height: 50,
-                                margin: EdgeInsets.all(10),
+                                height: 60,
+                                //width: 200,
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                //margin: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: Colors.black12,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(40)
                                 ),
                                 child: TextField(
@@ -163,140 +182,206 @@ class Signup_Screen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.all(10),decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.white
+                          SizedBox(height: 15,),
+              
+                          ClipRRect(
+                            
+                            child: Container(
+                              height: 60,
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                //color: Colors.black12,
+                                borderRadius: BorderRadius.circular(40)
                               ),
-                              onSubmitted: (var val){
-                                variables.UserNameClr(val);
-                                variables.notifyListeners();
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'User Name',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
-                            ),
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
-                              onSubmitted: (var val){
-                                variables.MobileNumberClr(val);
-                                variables.notifyListeners();
+                                          
+                              child: BackdropFilter(
                                 
-                              },
-                              decoration: InputDecoration(
-                                prefixText: '+91',
-                                labelText: 'Mobile Number',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
-                            ),
-                            ),
-                          ),
-                          
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.white
+                                filter: ImageFilter.blur(
+                                  sigmaX: 6,
+                                  sigmaY: 6
+                                ),
+                                child: TextField(
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                  onSubmitted: (var val){
+                                    variables.UserNameClr(val);
+                                    variables.notifyListeners();
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: 'User Name',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                ),
+                                ),
                               ),
-                              onSubmitted: (val){
-                                variables.EmailClr(val);
-                                variables.notifyListeners();
-                              },                            
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
-                            ),
                             ),
                           ),
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.white
+                          SizedBox(height: 15,),
+                          ClipRRect(
+                            
+                            child: Container(
+                              height: 60,
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                //color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(40)
                               ),
-                              onSubmitted: (val){
-                              variables.DoBClr(val);
-                              variables.notifyListeners();
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Date of Birth',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
-                            ),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                sigmaX: 6,
+                                sigmaY: 6
+                              ),
+                                child: TextField(
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                  onSubmitted: (var val){
+                                    variables.MobileNumberClr(val);
+                                    variables.notifyListeners();
+                                    
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixText: '+91',
+                                    labelText: 'Mobile Number',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                ),
+                                ),
+                              ),
                             ),
                           ),
+                          SizedBox(height: 15,),
+                          ClipRRect(
+                           borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: 60,
+                            padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                //color: Colors.black12,
+                                borderRadius: BorderRadius.circular(40)
+                              ),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                sigmaX: 7,
+                                sigmaY: 7
+                              ),
+                                child: TextField(
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                  onSubmitted: (val){
+                                    variables.EmailClr(val);
+                                    variables.notifyListeners();
+                                  },                            
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15,),
+                          ClipRRect(
+              
+                            child: Container(
+                              height: 60,
+                            padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                //color: Colors.black12,
+                                borderRadius: BorderRadius.circular(40)
+                              ),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                sigmaX: 7,
+                                sigmaY: 7
+                              ),
+                                child: TextField(
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                  onSubmitted: (val){
+                                  variables.DoBClr(val);
+                                  variables.notifyListeners();
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: 'Date of Birth',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15,),
                           Consumer<passiconprovider>(
-                            builder:(context, value, child) =>  Container(
-                              height: 50,
-                              margin: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                              child: TextField(
-                                style: TextStyle(
-                                color: Colors.white
+                            builder:(context, value, child) =>  ClipRRect(
+                              child: Container(
+                                height: 60,
+                              padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                //color: Colors.black12,
+                                borderRadius: BorderRadius.circular(40)
                               ),
-                                obscureText: value.Active,
-                                onSubmitted: (val){
-                                  variables.PassClr(val);
-                                  variables.notifyListeners();
-                                },
-                                decoration: InputDecoration(
-                                  labelText: 'password',
-                                  suffixIcon: custompasssuffixicon(context, value),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                sigmaX: 7,
+                                sigmaY: 7
                               ),
+                                  child: TextField(
+                                    style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                    obscureText: value.Active,
+                                    onSubmitted: (val){
+                                      variables.PassClr(val);
+                                      variables.notifyListeners();
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'password',
+                                      suffixIcon: custompasssuffixicon(context, value),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                  ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
+                          SizedBox(height: 15,),
                           Consumer<confirmpassiconprovider>(
-                            builder:(context, value, child) =>  Container(
-                              height: 50,
-                              margin: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                              child: TextField(
-                                style: TextStyle(
-                                color: Colors.white
+                            builder:(context, value, child) =>  ClipRRect(
+                              child: Container(
+                                height: 60,
+                              padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                //color: Colors.black12,
+                                borderRadius: BorderRadius.circular(40)
                               ),
-                                obscureText: value.confirmActive,
-                                onSubmitted: (val){
-                                  variables.ConfirmPassClr(val);
-                                  variables.notifyListeners();
-                                },
-                                decoration: InputDecoration(
-                                  labelText: 'confirm password',
-                                  suffixIcon: customconfirmpasssuffixicon(context,value),
-                                border: OutlineInputBorder(borderRadius:BorderRadius.circular(40))
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                sigmaX: 7,
+                                sigmaY: 7
                               ),
+                                  child: TextField(
+                                    style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                    obscureText: value.confirmActive,
+                                    onSubmitted: (val){
+                                      variables.ConfirmPassClr(val);
+                                      variables.notifyListeners();
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'confirm password',
+                                      suffixIcon: customconfirmpasssuffixicon(context,value),
+                                    border: OutlineInputBorder(borderRadius:BorderRadius.circular(40))
+                                  ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
