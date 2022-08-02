@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,15 @@ class Signup_Screen extends StatelessWidget {
               child: Container(
                 height: height*0.88,
                 //color: Colors.white24,
-                color: Color(0xff5d74c7),
+                decoration: BoxDecoration(
+                  color: Color(0xff5d74c7),
+                  image:DecorationImage(
+                    //colorFilter: ColorFilter.mode(Colors.yellow, BlendMode.hue),
+                    image: AssetImage('Assets/BG.png',)
+                  ),
+                  
+                ),
+                //color: Color(0xff5d74c7),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -67,16 +77,26 @@ class Signup_Screen extends StatelessWidget {
                                   print(usertypes.recipient);
                                   }
                                 },
-                                child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: (usertypes.recipient)?Colors.red:Colors.white,
-
-                                  ),
-                                  child: Center(
-                                    child: Text('Recipient'),
+                                child: ClipRRect(
+                                  
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 7,
+                                      sigmaY: 7
+                                    ),
+                                    child: Container(
+                                      height: 100,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: (usertypes.recipient)?Color.fromARGB(119, 45, 21, 111):Colors.black12,
+                                                                  
+                                      ),
+                                      child: Center(
+                                        child: Text('Recipient'),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -87,42 +107,60 @@ class Signup_Screen extends StatelessWidget {
                                   usertypes.notifyListeners();
                                   }
                                 },
-                                child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  child: Center(
-                                    child: Text('Donor'),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: (usertypes.donor)?Colors.red:Colors.white,
+                                child: ClipRRect(
 
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 7,
+                                      sigmaY: 7
+                                    ),
+                                    child: Container(
+                                      height: 100,
+                                      width: 150,
+                                      child: Center(
+                                        child: Text('Donor'),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: (usertypes.donor)?Color.fromARGB(119, 45, 21, 111):Colors.black12,
+                                                                  
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ) 
                             ],
                           ),
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.white
+                          ClipRRect(
+                            
+                            child: BackdropFilter(
+                               filter: ImageFilter.blur(
+                                sigmaX: 7,
+                                sigmaY: 7
+                               ),
+                              child: Container(
+                                height: 50,
+                                margin: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.circular(40)
+                                ),
+                                child: TextField(
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                  onSubmitted: (val){
+                                    variables.FullNameClr(val);
+                                    variables.notifyListeners();
+                                  },
+                                  
+                                  decoration: InputDecoration(
+                                    labelText: 'Full Name',
+                                    
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
+                                ),
+                                ),
                               ),
-                              onSubmitted: (val){
-                                variables.FullNameClr(val);
-                                variables.notifyListeners();
-                              },
-                              
-                              decoration: InputDecoration(
-                                labelText: 'Full Name',
-                                
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(40))
-                            ),
                             ),
                           ),
                           Container(

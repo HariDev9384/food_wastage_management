@@ -1,25 +1,20 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_wastage_management/models/firebase.dart';
 import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
 import 'package:food_wastage_management/providers/focus/textfieldfocus.dart';
 import 'package:food_wastage_management/providers/login_screen_providers/login_icon_provider.dart';
 import 'package:food_wastage_management/widgets/custom_suffix_icon.dart';
 import 'package:food_wastage_management/widgets/loginwidgets/loginpassicon.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 import 'package:provider/provider.dart';
 import '../custom icons/custom_social_icons_icons.dart';
 import '../Services/Auth/Firebase_Auth_Service.dart';
 import '../screens/login_screen.dart';
 class ForgroundWidget extends StatefulWidget{
   ForgroundWidget({required var value,required context,var SubId});
-  //  getlist([snapshot]){
-  //   snapshot.data!.docs.forEach(
-  //       (val){
-  //         print(val.id);
-  //        return val.id;
-         
-  //       }
-  //   );
-  // }
   @override
   State<ForgroundWidget> createState() => _ForgroundWidgetState();
 }
@@ -33,47 +28,59 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
   FocusNode focus=FocusNode();
   var height=MediaQuery.of(context).size.height;
   var width=MediaQuery.of(context).size.width;
-  // final userid=snapshot.data.docs[0].id;
-  // final donorid=FirebaseFirestore.instance.collection('users').get().then((value) => value.docs);
-  // final dbref=FirebaseFirestore.instance.collection('users').doc(userid).collection('donors').doc().get();
-  
  textfieldfocus _focus;
  bool signin=false;
- List<DocumentSnapshot>? docs;
- var checkdocid;
- var role;
-check_gmail(i,email){
-  if(docs![i]['gmail']==email){
-    checkdocid = docs![i].id;
-    if(signin==true){
-    if(docs![i]['role']=='donor'){
+ List documents=[];
+// void check_gmail(i,email){
+//   if(documents![i]['gmail']==email){
+//     checkdocid = documents![i].id;
+//     if(signin==true){
+//     if(documents![i]['role']=='donor'){
     
-      Navigator.of(context).pushReplacementNamed('/donorhome');
+//       Navigator.of(context).pushReplacementNamed('/donorhome');
     
-      }else if(docs![i]['role']=='recipient'){
-        Navigator.of(context).pushReplacementNamed('/recipienthome');
-                      }
-    }
-  }
-  print(checkdocid);
-}
-verify(email){
-  for(int i=0;i<docs!.length;i++){
-    //print(docs![i]['name']);
-    //print(docs![i]['gmail']);
-    check_gmail(i,email);
-    //dbindex=i;
-    // if(docs![i]['name']=='hari'){
-    //   print(docs![i]);
-    // }
-  }
-}
-   return StreamBuilder(
+//       }else if(documents![i]['role']=='recipient'){
+//         Navigator.of(context).pushReplacementNamed('/recipienthome');
+//                       }
+//     }
+//   }
+//   print(checkdocid);
+// }
+// verify(var email){
+//   for(int i=0;i<documents!.length;i++){
+//     check_gmail(i,email);
+//   }
+// }
+
+   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance.collection('users').snapshots(),
-    builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) { 
-      //widget.getlist(snapshot); 
-      //docs=widget.getlist(snapshot);
-       docs=snapshot.data!.docs;    
+    builder: (context,AsyncSnapshot snapshot) { 
+     List<DocumentSnapshot>  docslist=snapshot.data!.docs;
+      checkgmail(gmail,docsnapshot){
+        
+        if(docsnapshot['gmail']==gmail){
+            if(docsnapshot['role']=='donor'){
+              Navigator.of(context).pushReplacementNamed('/donorhome');
+            }
+            else{
+              Navigator.of(context).pushReplacementNamed('/recipienthome');
+            }
+        }
+      }
+      validate(var gmail){
+        for(int i=0;i<docslist.length;i++){
+        DocumentSnapshot  docsnapshot=snapshot.data!.docs[i];
+        //print(docsnapshot.id);
+        documents.add(docsnapshot.data());
+        //print(docsnapshot['gmail']);
+        checkgmail(gmail,docsnapshot);
+        
+        
+        //print(docsnapshot[i]);
+        //print(docsnapshot.data());
+        }
+      }
+
       return  Consumer2<Login_Text_Controllers,login_visibleicon_provider>(
       builder:(context, value,passicon, child) => 
        SingleChildScrollView(
@@ -88,12 +95,21 @@ verify(email){
                  Row(
                    children: [
                      SizedBox(width: 15,),
-                     Text('Welcome',
-                     style: TextStyle(
-                       fontSize: 26,
-                       color: Colors.white,
-                       fontWeight: FontWeight.bold
-                     ),
+                     InkWell(
+                      onTap: (){
+                                //validate();
+                               //adddoc(docsnapshot);
+                            //  print(
+                            //   snapshot.data!.docs.map((e) => e.data())
+                            //  );
+                      },
+                       child: Text('Welcome',
+                       style: TextStyle(
+                         fontSize: 26,
+                         color: Colors.white,
+                         fontWeight: FontWeight.bold
+                       ),
+                       ),
                      ),
                    ],
                  ),
@@ -114,34 +130,41 @@ verify(email){
                          ),
                        ],
                      ),
+                     SizedBox(
+                   height: 10,
+                 ),
                    
-                 Container(
-                   height: 50,
-                   margin: EdgeInsets.all(10),
+                 ClipRRect(
+                
+                   child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 6,
+                      sigmaY: 6
+                    ),
+                     child: Container(
+                      height: 50,
+                      width: width/1.05,
                    decoration: BoxDecoration(
                      color: Colors.black12,
                      borderRadius: BorderRadius.all(Radius.circular(50))
                    ),
-                   child: TextField(
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                      onSubmitted: (text)async{
-                       //print(donorid);
-                        value.emailclr(text);
-                        print(value.email_clr);
-                        // print('temp doc id: ${dbref.asStream().forEach((val) {
-                        //  print( val.data().toString());
-                        // })}');
-                        //print('user role type ${docs['role']}');
-                        value.notifyListeners();
-                      },
-                     decoration: InputDecoration(
-                       
-                     border: OutlineInputBorder(
-                       
-                       borderRadius: BorderRadius.circular(50))
-                   ),
+                      //color: Colors.black26,
+
+                       child: TextField(
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                          onSubmitted: (text)async{
+                            value.emailclr(text);
+                            print(value.email_clr);
+                            value.notifyListeners();
+                          },
+                         decoration: InputDecoration(
+                         border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(50))
+                       ),
+                       ),
+                     ),
                    ),
                  ),
                  SizedBox(
@@ -151,7 +174,6 @@ verify(email){
                    children: [
                      SizedBox(width: 15,),
                      Text('Password',
-                     
                      style: TextStyle(
                        fontSize: 18,
                        fontWeight: FontWeight.bold,
@@ -167,25 +189,33 @@ verify(email){
                      borderRadius: BorderRadius.all(Radius.circular(50))
                    ),
                    margin: EdgeInsets.all(10),
-                   child: TextField(
-                    
-                    style: TextStyle(
-                        color: Colors.white
+                   child: ClipRRect(
+                     child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 7,
+                        sigmaY: 7
                       ),
-                      obscureText: passicon.active,
-                      
-                    onSubmitted: (text){
-                        value.passclr(text);
-                        print(value.pass_clr);
-                        value.notifyListeners();
-                      },
-                    //controller: value.pass_clr,
-                    decoration: InputDecoration(
-                      suffixIcon: Customloginpassicon(context,passicon),
-                       border: OutlineInputBorder(
-                    
-                       borderRadius: BorderRadius.circular(50))
-                    ),
+                       child: TextField(
+                        
+                        style: TextStyle(
+                            color: Colors.white
+                          ),
+                          obscureText: passicon.active,
+                          
+                        onSubmitted: (text){
+                            value.passclr(text);
+                            print(value.pass_clr);
+                            value.notifyListeners();
+                          },
+                        //controller: value.pass_clr,
+                        decoration: InputDecoration(
+                          suffixIcon: Customloginpassicon(context,passicon),
+                           border: OutlineInputBorder(
+                        
+                           borderRadius: BorderRadius.circular(50))
+                        ),
+                       ),
+                     ),
                    )
                  ),
                    ]),
@@ -193,27 +223,44 @@ verify(email){
                  Row(
                    children: [
                      SizedBox(width: 20,),
-                     Container(
-                       height: 50,
-                       width: 50,
-                       child: Icon(CustomSocialIcons.google,color: Colors.white),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(50),
-                         color: Colors.black12
+                     ClipRRect(
+
+                       child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 7,
+                          sigmaY: 7
+                        ),
+                         child: Container(
+                           height: 50,
+                           width: 50,
+                           child: Icon(CustomSocialIcons.google,color: Colors.white),
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(50),
+                             color: Colors.black12
+                           ),
+                           //color: Colors.black12,
+                         ),
                        ),
-                       //color: Colors.black12,
                      ),
                      SizedBox(width: 20,),
-        
-                     Container(
-                       height: 50,
-                       width: 50,
-                       child: Icon(CustomSocialIcons.facebook,color: Colors.white),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(50),
-                         color: Colors.black12
+               
+                     ClipRRect(
+                       child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 7,
+                          sigmaY: 7
+                        ),
+                         child: Container(
+                           height: 50,
+                           width: 50,
+                           child: Icon(CustomSocialIcons.facebook,color: Colors.white),
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(30),
+                             color: Colors.black12
+                           ),
+                           //color: Colors.black12,
+                         ),
                        ),
-                       //color: Colors.black12,
                      )
                    ],
                  ),
@@ -247,12 +294,13 @@ verify(email){
                      );
                      if (message!.contains('Success')) {
                       signin=true;
-                      verify(value.email_clr);
+                      validate(value.email_clr);
+                      //verify(value.email_clr);
                 //       if(docs['role']=='donor'){
                 //    Navigator.of(context).pushReplacementNamed('/donorhome');
                 //       }else{
                 //    Navigator.of(context).pushReplacementNamed('/recipienthome');
-   
+          
                       
                 //  }
                  ScaffoldMessenger.of(context).showSnackBar(
@@ -263,7 +311,7 @@ verify(email){
                      }
                  },
                    ),
-        
+               
                  Container(
                    height: 60,
                    width: 60, 
