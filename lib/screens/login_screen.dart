@@ -40,7 +40,8 @@ class _Login_ScreenState extends State<Login_Screen> {
               
                     //color: Colors.red,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 99, 23, 180),
+                      color: Colors.indigo.withOpacity(0.7),
+                      //color: Color.fromARGB(255, 99, 23, 180),
                       image: DecorationImage(
                                
                         colorFilter: ColorFilter.srgbToLinearGamma(

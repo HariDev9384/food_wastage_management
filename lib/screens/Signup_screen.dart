@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_wastage_management/Services/Auth/response.dart';
-import 'package:food_wastage_management/Services/firestore/add_info.dart';
+import 'package:food_wastage_management/Services/firestore/Signup_Add_Info.dart';
 import 'package:food_wastage_management/providers/signup_screen_providers/passwordiconprov.dart';
 import 'package:food_wastage_management/providers/signup_screen_providers/signup_variables_provider.dart';
 import 'package:food_wastage_management/providers/signup_screen_providers/user_types.dart';
@@ -30,10 +30,12 @@ class Signup_Screen extends StatelessWidget {
         builder: ((context, variables,users, child) => 
          Scaffold(
           appBar: AppBar(
+            
             title: Text('Signup'),
             centerTitle: true,
             elevation: 0,
-            backgroundColor: Color(0xff5d74c7),
+            shadowColor: Colors.transparent,
+            backgroundColor: Colors.indigo.withOpacity(0.7),
             //backgroundColor: Colors.blueAccent,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -47,8 +49,8 @@ class Signup_Screen extends StatelessWidget {
                 height: height/1,
                 //color: Colors.white24,
                 decoration: BoxDecoration(
-                  color: Color(0xff5d74c7),
-              
+                  //color: Color(0xff5d74c7),
+                    color: Colors.indigo.withOpacity(0.7),
                   image:DecorationImage(
                     fit: BoxFit.fitHeight,
                     //colorFilter: ColorFilter.mode(Colors.yellow, BlendMode.hue),
@@ -61,7 +63,7 @@ class Signup_Screen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: height*0.77,
+                      height: height*0.8,
                       
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -81,8 +83,9 @@ class Signup_Screen extends StatelessWidget {
                                   }
                                 },
                                 child: ClipRRect(
-                                  
+                                  borderRadius: BorderRadius.circular(10),
                                   child: BackdropFilter(
+                                    
                                     filter: ImageFilter.blur(
                                       sigmaX: 7,
                                       sigmaY: 7
@@ -148,7 +151,7 @@ class Signup_Screen extends StatelessWidget {
                           ),
                           SizedBox(height: 15,),
                           ClipRRect(
-                            
+                            borderRadius: BorderRadius.circular(10),
                             child: BackdropFilter(
                                filter: ImageFilter.blur(
                                 sigmaX: 7,
@@ -185,7 +188,7 @@ class Signup_Screen extends StatelessWidget {
                           SizedBox(height: 15,),
               
                           ClipRRect(
-                            
+                            borderRadius: BorderRadius.circular(10),
                             child: Container(
                               height: 60,
                               padding: EdgeInsets.all(5),
@@ -219,7 +222,7 @@ class Signup_Screen extends StatelessWidget {
                           ),
                           SizedBox(height: 15,),
                           ClipRRect(
-                            
+                            borderRadius: BorderRadius.circular(10),
                             child: Container(
                               height: 60,
                               padding: EdgeInsets.all(5),
@@ -253,10 +256,10 @@ class Signup_Screen extends StatelessWidget {
                           ),
                           SizedBox(height: 15,),
                           ClipRRect(
-                           borderRadius: BorderRadius.circular(20),
+                           borderRadius: BorderRadius.circular(30),
                             child: Container(
                               height: 60,
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(4),
                               margin: EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                 //color: Colors.black12,
@@ -285,7 +288,8 @@ class Signup_Screen extends StatelessWidget {
                           ),
                           SizedBox(height: 15,),
                           ClipRRect(
-              
+                                                       borderRadius: BorderRadius.circular(20),
+
                             child: Container(
                               height: 60,
                             padding: EdgeInsets.all(5),

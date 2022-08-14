@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
+import 'package:food_wastage_management/providers/bottom_nav_index.dart';
+import 'package:food_wastage_management/providers/current_user_doc_id.dart';
 import 'package:food_wastage_management/providers/login_screen_providers/login_icon_provider.dart';
 import 'package:food_wastage_management/providers/navigation_providers/home_navigation_provider.dart';
 import 'package:food_wastage_management/providers/signup_screen_providers/passwordiconprov.dart';
@@ -10,12 +12,11 @@ import 'package:food_wastage_management/screens/donors/donor_home.dart';
 import 'package:food_wastage_management/screens/recipients/recipient_home.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:food_wastage_management/screens/Home_screen.dart';
 import 'package:food_wastage_management/screens/Signup_screen.dart';
 import 'package:food_wastage_management/screens/login_screen.dart';
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); 
+  await Firebase.initializeApp();
   runApp(
   MultiProvider(
     child: MyApp(),
@@ -26,9 +27,12 @@ Future<void> main() async{
     ChangeNotifierProvider(create: (_home_navigation)=>Home_Navigation_provider()),
     ChangeNotifierProvider(create: (text_clr)=>Login_Text_Controllers()),
     ChangeNotifierProvider(create: (signup_varprov)=>Signup_Variable_Provider()),
-    ChangeNotifierProvider(create: (user_types)=>UserTypes())
-    
-  ])
+    ChangeNotifierProvider(create: (user_types)=>UserTypes()),
+    ChangeNotifierProvider(create: (_bottomnavindex)=>BottomNavigationIndex()),
+    ChangeNotifierProvider(create: (_currentdoc)=>Current_Doc())
+
+  ]
+  )
   );
 }
 class MyApp extends StatelessWidget {
@@ -40,7 +44,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login':(context) => Login_Screen(),
         '/signup':(context) =>Signup_Screen(),
-        //'/home':(context)=>Home_Screen(),
         '/donorhome':(context)=>DonorHome(),
         '/recipienthome':(context)=>RecipientHome()
       },

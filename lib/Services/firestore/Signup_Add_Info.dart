@@ -18,19 +18,20 @@ class Info{
    final FirebaseFirestore _firestore=FirebaseFirestore.instance;
   //  final d=_firestore.collection('users').get().then(
   //   (QuerySnapshot snapshot){
-  //     snapshot.docs.map((doc) => doc.id);
+      // snapshot.docs.map((doc) => doc.id);
   //   }
   //  );
 
   void add_data(){
       _firestore.collection("users").add({
-            'restaurant name':Full_name,
+            'Full name':Full_name,
             'Mobile Number':mobile_no,
             'User Password':user_pass,
             'User Name':username,
             'Date of Birth':dob,
             'gmail':email,
-            'role':role
+            'role':role,
+
       });
   }
 
