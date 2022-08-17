@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
 import 'package:food_wastage_management/providers/bottom_nav_index.dart';
+import 'package:food_wastage_management/providers/checkdish.dart';
 import 'package:food_wastage_management/providers/current_user_doc_id.dart';
 import 'package:food_wastage_management/providers/login_screen_providers/login_icon_provider.dart';
 import 'package:food_wastage_management/providers/navigation_providers/home_navigation_provider.dart';
@@ -29,7 +30,8 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (signup_varprov)=>Signup_Variable_Provider()),
     ChangeNotifierProvider(create: (user_types)=>UserTypes()),
     ChangeNotifierProvider(create: (_bottomnavindex)=>BottomNavigationIndex()),
-    ChangeNotifierProvider(create: (_currentdoc)=>Current_Doc())
+    ChangeNotifierProvider(create: (_currentdoc)=>Current_Doc()),
+    ChangeNotifierProvider(create:  (_checkdish)=>checkdish())
 
   ]
   )

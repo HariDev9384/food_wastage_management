@@ -1,8 +1,6 @@
 class DB{
   
-  var email;
-  var dob;
-  var mobil_no,user_name,user_pass,full_name,role;
+ var email, dob, mobil_no,user_name,user_pass,full_name,role;
   DB({required this.full_name,required this.email,required this.dob,required this.mobil_no, required this.role, required this.user_name, required this.user_pass});
       Map<String, dynamic> toJson(){
                 return{

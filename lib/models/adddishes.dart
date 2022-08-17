@@ -8,7 +8,7 @@ class Add_Dishes{
   late String price;
   
   Add_Dishes({
-    //required this.docid,
+    
     required this.dish_name,
     required this.donor_name,
     required this.quantity,

@@ -53,44 +53,37 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
  List documents=[];
  List<DB> ds;
  var docid;
-
+ final firestore=FirebaseFirestore.instance;
   final usersref=FirebaseFirestore.instance.collection('users');
  final dlist=FirebaseFirestore.instance.collection('users').where('email',isEqualTo:'email').get().then((value) =>print(value.docs));
   final userssnapshot=usersref.snapshots().map((snapshot) => snapshot.docs
         .map((snapshot) => DB.fromJson(snapshot.data()))
         .toList());
 
-   return Consumer<Current_Doc>(
+   return Consumer<Login_Text_Controllers>(
     builder: (context, value, child) => 
-     StreamBuilder<List<DB?>>(
-      stream: userssnapshot,
-      builder: (context,AsyncSnapshot snapshot) { 
-       final rdata=snapshot.data!.toList();
-        checkgmail(email,doclist,doc_index){
-          if(doclist.email==email){          
-              if(doclist.role=='donor'){
-                current_doc_id=user_doc_list.elementAt(doc_index);
-                print('Current id of donor: ${user_doc_list.elementAt(doc_index)}');
+     StreamBuilder(
+      stream: firestore.collection('users').where('gmail',isEqualTo: value.email_clr).snapshots(),
+      builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) { 
+       
+        if(snapshot.hasData){
+          var doc= snapshot.data!.docs;
+        checkgmail(){
+                  
+              if(doc.map((e) => e['role'])=='donor'){
+                print(snapshot.data!.docs.map((e) => e['role']));
                 Navigator.of(context).pushReplacementNamed('/donorhome');
               }
-              else{
-                current_doc_id=user_doc_list.elementAt(doc_index);
-                value.getdocid(current_doc_id);
-                value.notifyListeners();
-                print('Current id of recipient: ${user_doc_list.elementAt(doc_index)}');
+              else {
+                  print(snapshot.data!.docs.map((e) => e['role']));
+                  print(snapshot.data!.docs.map((e) => e.id));
+
+
                 Navigator.of(context).pushReplacementNamed('/recipienthome');
                 //RecipientHome(docsnapshot.id.toString());
               }
-          }
-        }
-        validate(var email){
-          for(int i=0;i<rdata.length;i++){
           
-          checkgmail(email,rdata.elementAt(i),i);
-          
-          }
         }
-      if(snapshot.hasData){
         return  Consumer2<Login_Text_Controllers,login_visibleicon_provider>(
         builder:(context, value,passicon, child) => 
          SingleChildScrollView(
@@ -307,16 +300,14 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
                        );
                        if (message!.contains('Success')) {
                         signin=true;
-                        validate(value.email_clr);
-                        //verify(value.email_clr);
-                  //       if(docs['role']=='donor'){
-                  //    Navigator.of(context).pushReplacementNamed('/donorhome');
-                  //       }else{
-                  //    Navigator.of(context).pushReplacementNamed('/recipienthome');
-            
-                        
-                  //  }
+                        checkgmail();
                    ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                       content: Text(message),
+                     ),
+                   );
+                       }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(
                        content: Text(message),
                      ),
@@ -347,30 +338,6 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
                    ],
                  ),
                ),
-               // RaisedButton(
-               //   color: Colors.transparent,
-               //   child: Text('Login'),
-               //   onPressed: ()async{
-               //     final message=await AuthService().login(
-               //       email: _emailController.text,
-               //       password: _passwordController.text
-               //       );
-               //       if (message!.contains('Success')) {
-               //     Navigator.of(context).pushReplacementNamed('/home');
-               //   }
-               //   ScaffoldMessenger.of(context).showSnackBar(
-               //     SnackBar(
-               //       content: Text(message),
-               //     ),
-               //   );
-               //   },
-               // ),
-               // Divider(
-               //   height: 10,
-               //   indent: 150,
-               //   endIndent: 150,
-               //   color: Colors.black,
-               // ),
                SizedBox(height: 80,),
                Container(
                  margin: EdgeInsets.only(left: 10,right: 10),
@@ -378,7 +345,6 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: 
                      [
-                     //SizedBox(width: 10,),
                      InkWell(
                        child: Text('Signup',
                        style: TextStyle(
@@ -407,6 +373,8 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
            ),
          ),
        );
+        }else if(snapshot.hasError){
+          print('Data Fetch Exception : ${snapshot.error}');
         }
         return Center(
           child: CircularProgressIndicator(),

@@ -413,7 +413,7 @@ class Signup_Screen extends StatelessWidget {
                                 mobile_no:variables.MobileNumber,
                                 username: variables.UserName,
                                 role: usertypes.donor?'donor':'recipient'
-                              ).add_data();
+                              ).add_data(context);
                             
                               // }else if(usertypes.recipient){
                               // Info(

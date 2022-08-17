@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_wastage_management/Services/firestore/Add_Dishes_store.dart';
 import 'package:food_wastage_management/models/adddishes.dart';
+import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
 import 'package:food_wastage_management/providers/bottom_nav_index.dart';
 import 'package:food_wastage_management/providers/current_user_doc_id.dart';
 import 'package:food_wastage_management/screens/recipients/Tabs/ChatTab.dart';
@@ -22,11 +23,14 @@ class RecipientHome extends StatefulWidget {
   State<RecipientHome> createState() => _RecipientHomeState();
 }
 
-class _RecipientHomeState extends State<RecipientHome> {
-  
+class _RecipientHomeState extends State<RecipientHome> { 
   List<Add_Dishes> Dishes=[];
-    var docid;
   bool availble=true;
+      @override
+      void initState() {
+        super.initState();
+        //GetDocID();
+      }
   check_availble(val){
     setState(() {
       availble=val;
@@ -45,15 +49,8 @@ Future pickImage() async {
     print('Failed to pick image $e');
   }
   }
-  getcurrentdocid(){
-      docid= Provider.of<Current_Doc>(context,listen: false).current_doc_id;
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getcurrentdocid();
-  }
+  
+  
   void add_dishes(dish_name,donor_name,quantity,desc,price){
 if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
 
@@ -65,7 +62,7 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
       donor_name: donor_name,
       price: price,
       quantity: quantity,
-      docid: docid
+      context: context
     );
       setState(() {
         if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
@@ -92,14 +89,16 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
     
     var width=MediaQuery.of(context).size.width;
     List<Widget> screens=[
-      HomeTab(height, width,docid),
+      HomeTab(height, width),
       ChatTab(),
       NotificationTab(),
       ProfileTab(context,pickImage,_image)
     ];
     return 
        Consumer<BottomNavigationIndex>(
-        builder: (context, screen, child) => 
+        builder: (context, screen, child) {
+          
+        return
           Scaffold(
           body:  
              Container(
@@ -145,7 +144,8 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
               ),
             ),
        
-           ),
+           );
+        }
        );
     
   }
@@ -157,8 +157,8 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
                   height: height*0.04,
                   child: InkWell(
                     onTap: (){
-                      getcurrentdocid();
-                      print('From recipient page :${docid}');
+                      var k=Provider.of<Login_Text_Controllers>(context,listen: false);
+                     
                       Alert_Add_Dishes(context, height, width, Donor_name_clr, Dish_name_clr, quantity_clr, description_clr, price_clr,widget);
                     },
                     child: Container(
