@@ -31,8 +31,6 @@ ProfileTab(context,pickimage,profile_image)  {
     
                 child: InkWell(
                   onTap: ()async{
-                    print(snapshot.data!.docs.map((e) => e.id)
-                    );
                    await pickimage();
                   },
                   child: CircleAvatar(
@@ -50,7 +48,7 @@ ProfileTab(context,pickimage,profile_image)  {
             right: 20,
             child: Text(snapshot.data['gmail'].toString(),
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 16,
               fontWeight: FontWeight.bold
             ),
             ),
@@ -60,61 +58,170 @@ ProfileTab(context,pickimage,profile_image)  {
             right: 20,
             child: Text(snapshot.data['User Name'],
             style: TextStyle(
-              fontSize:   18,
+              fontSize:   15,
               //fontWeight: FontWeight.bold
             ),
             ),
           ),
           Positioned(
-            top: height*0.3,
+            top: height*0.2,
             right: 0,
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 6,
-                  sigmaY: 6
-                ),
-                child: Container(
-                  height: height*0.465,
-                  width: width/1,
-                  color: Colors.transparent,
-                      
-                  child: Column(
-                    children: [
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
+            child: Container(
+              height: height*0.6,
+              width: width/1,
+              color: Colors.transparent,
+                  
+              child: Column(
+                children: [
+                  ClipRRect(
+                    child: Container(
+                      height: height*0.06,
+                      color: Colors.black12,
+                      child: Padding(
+                        padding:  EdgeInsets.only(left: width*0.1,),
+                        child: Row(
+                          
+                          children: [
+                            Icon(FontAwesomeIcons.user),
+                            SizedBox(width: width*0.05,),
+                            Text('Profile',
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                            )
+                          ],
+                        ),
                       ),
-                      Divider(),
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
-                      ),
-                      Divider(),
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
-                      ),
-                      Divider(),
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
-                      ),
-                      Divider(),
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
-                      ),
-                      Divider(),
-                      Container(
-                        height: height*0.06,
-                        color: Colors.black12,
-                      ),
-                      
-                      
-                    ],
+                    ),
                   ),
-                ),
+                  Divider(color: Colors.transparent),
+                  Container(
+                    height: height*0.06,
+                    color: Colors.black12,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: width*0.1,),
+                      child: Row(
+                        
+                        children: [
+                          Icon(FontAwesomeIcons.star),
+                          SizedBox(width: width*0.05,),
+                          Text('Ratings',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(color: Colors.transparent),
+                  Container(
+                    height: height*0.06,
+                    color: Colors.black12,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: width*0.1,),
+                      child: Row(
+                        
+                        children: [
+                          Icon(Icons.settings_accessibility),
+                          SizedBox(width: width*0.05,),
+                          Text('Settings',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(color: Colors.transparent),
+                  Container(
+                    height: height*0.06,
+                    color: Colors.black12,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: width*0.1,),
+                      child: Row(
+                        
+                        children: [
+                          Icon(Icons.feedback),
+                          SizedBox(width: width*0.05,),
+                          Text('Feedbacks',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(color: Colors.transparent),
+                  Container(
+                    height: height*0.06,
+                    color: Colors.black12,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: width*0.1,),
+                      child: Row(
+                        
+                        children: [
+                          Icon(Icons.info),
+                          SizedBox(width: width*0.05,),
+                          Text('About',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(color: Colors.transparent),
+                  Container(
+                    height: height*0.06,
+                    color: Colors.black12,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: width*0.1,),
+                      child: Row(
+                        
+                        children: [
+                          Icon(FontAwesomeIcons.contactCard),
+                          SizedBox(width: width*0.05,),
+                          Text('Contact Us',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                   Divider(color: Colors.transparent),
+                  InkWell(
+                    onTap: (){
+                      Navigator.of(context).pushReplacementNamed('/login');
+                    },
+                    child: Container(
+                      height: height*0.06,
+                      color: Colors.black12,
+                      child: Padding(
+                        padding:  EdgeInsets.only(left: width*0.1,),
+                        child: Row(
+                          
+                          children: [
+                            Icon(Icons.logout),
+                            SizedBox(width: width*0.05,),
+                            Text('Logout',
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  
+                  
+                ],
               ),
             )
           )

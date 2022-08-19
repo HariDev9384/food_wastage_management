@@ -1,4 +1,12 @@
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:food_wastage_management/providers/bottom_nav_index.dart';
+import 'package:food_wastage_management/screens/donors/Tabs/Cart.dart';
+import 'package:food_wastage_management/screens/donors/Tabs/Delivery.dart';
+import 'package:food_wastage_management/screens/donors/Tabs/Home.dart';
+import 'package:food_wastage_management/screens/donors/Tabs/Profile.dart';
+import 'package:provider/provider.dart';
 class DonorHome extends StatelessWidget {
   const DonorHome({Key? key}) : super(key: key);
 
@@ -6,130 +14,107 @@ class DonorHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var height=MediaQuery.of(context).size.height;
     var width=MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        height: height/1,
-        width: width/1,
-        color: Colors.white,
-        child: Stack(
-          children: [
-            Container(
-              height: height*0.08,
-              width: width/1,
-              color: Colors.red,
-              child: Row(
-                children: [
-                  Container(
-                    height: height*0.08,
-                    width: width*0.7,
-                    color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Icon(Icons.location_on),
-                        Container(
-                          height: height*0.8,
-                          color: Colors.red,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-
-                            children: [
-                              Text('Your Location',
-                              style: TextStyle(
-                                fontSize: 18,
-                                wordSpacing: 2
-                              ),
-                              ),
-                              Text('Coimbatore')
-                            ],
-                          ),
-                        )
-                      ],
+    return Consumer<BottomNavigationIndex>(
+      builder: (context, screen, child) {
+        List<Widget> screens=[
+          HomeTab(),
+          DeliveryTab(),
+          CartTab(),
+          ProfileTab()
+        ];
+        return
+       Scaffold(
+        body: Container(
+          height: height/1,
+          width: width/1,
+          color: Colors.white,
+          child: Stack(
+            children: [
+              Positioned(
+                    top: height*0.12,
+                    width: width/1,
+                    height: height*0.78,
+                    child: Container(
+                      height: height*0.78,
+                      //color: Colors.red,
+                      child: screens.elementAt(screen.current_index),
                     ),
                   ),
-                  Container(
-                    height: height*0.08,
-                    width: width*0.3,
-                    color: Colors.pink,
-                  )
-                ],
-              ),
-            ),
-            Center(
-               child: Text('donor home'),
-            ),
-            Positioned(
-              top: height/1.1,
-              left: 0,
-              child: Container(
-                height: height/11,
-                width: width/1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.delivery_dining,
-                      color: Colors.white,
-                      size: 45,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.local_offer_sharp,
-                      color: Colors.white,
-                      size: 35,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.home,
-                      color: Colors.white,
-                      size: 40,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.payment,
-                      color: Colors.white,
-                      size: 40,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.more_horiz,
-                      size: 40,
-                      color: Colors.white,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                //color: Colors.red,
-                decoration: BoxDecoration(
-                  boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 60.0,
-              spreadRadius: -1.0,
-              offset: Offset(-15.0, -10.0), // shadow direction: bottom right
-            )
-        ],
-
-                  color: Colors.deepPurpleAccent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)
-                  )
-                ),
-              
-              ),
-            )
-          ],
-        ),
-      )
- 
+              Positioned(
+                top: height/1.1,
+                left: 0,
+                child: CustomBottomNavigationBar(height, width, screen),           
+                )
+            ],
+          ),
+        )
+     
+      );
+      }
     );
   }
 }
+
+ CustomBottomNavigationBar (height,width,screen){
+    return Container(
+      height: height/11,
+      width: width/1,
+      child: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        currentIndex: screen.current_index,
+        type: BottomNavigationBarType.fixed,
+        fixedColor: Colors.white,
+        
+        unselectedItemColor: Colors.black54,
+        onTap: (val){
+          screen.Select_index(val);
+          screen.notifyListeners();
+        },
+
+        items: [
+
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(FontAwesomeIcons.home),
+            ),
+
+         BottomNavigationBarItem(
+            label: 'Chat',
+            icon: Icon(FontAwesomeIcons.message)
+            ),
+          BottomNavigationBarItem(
+            label: 'Notifications',
+            icon: Icon(Icons.notifications,size: 30,)
+            ),
+        
+
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(FontAwesomeIcons.user)),
+            
+
+
+        ],
+      ),
+      //color: Colors.red,
+      decoration: BoxDecoration(
+        boxShadow: [
+                BoxShadow(
+    color: Colors.black,
+    blurRadius: 60.0,
+    spreadRadius: -1.0,
+    offset: Offset(-15.0, -10.0), // shadow direction: bottom right
+                )
+            ],
+            
+        color: Colors.deepPurpleAccent,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30)
+        )
+      ),
+    
+    );
+  }
+
+

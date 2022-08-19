@@ -18,19 +18,17 @@ HomeTab(double height, double width) {
     builder: (context, value,dish ,child) {
       var currentlogin=Provider.of<Login_Text_Controllers>(context,listen: false);
     return 
-        FutureBuilder(
-             future: FirebaseFirestore.instance.collection('users').doc(currentlogin.email_clr).collection('donors').get(),
+        StreamBuilder(
+             stream: FirebaseFirestore.instance.collection('users').doc(currentlogin.email_clr).collection('donors').snapshots(),
             builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
-             if(snapshot.connectionState==ConnectionState.done){
-              if(snapshot.data==null){
-               print('object');
-              }
-              else{
+             
+              if(snapshot.hasData && snapshot.data!.docs.isNotEmpty){
+                
             return
              ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
+                            itemCount: snapshot.data!.docChanges.length,
                             itemBuilder: (context, index) {
-                          
+                           
                               
                               return Column(
                                 children: [
@@ -98,7 +96,7 @@ HomeTab(double height, double width) {
                                                        onChanged: (value){
                                                         dish.check(value);
                                                         AddDishesFirestore().update(context: context,index: index);
-                                                                                                                dish.notifyListeners();
+                                                        dish.notifyListeners();
 
                                                        }
                                                        )
@@ -114,16 +112,16 @@ HomeTab(double height, double width) {
                                   ),
                                   SizedBox(height: height*0.02,)
                                 ],
-                              );                    
-                            },
+                              ); 
+                          }
+                                            
+          
                           );
-              }
-             }else if(snapshot.connectionState==ConnectionState.none){
-              print('error');
+              
+             }else {
+              return Center(child: Text('no data'),);
              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+
              
             
           }

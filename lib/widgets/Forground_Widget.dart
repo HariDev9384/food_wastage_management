@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_wastage_management/models/current_user.dart';
 import 'package:food_wastage_management/models/firebase.dart';
 import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
 import 'package:food_wastage_management/providers/current_user_doc_id.dart';
@@ -30,7 +31,6 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
         (QuerySnapshot qs){
           qs.docs.forEach((element) {
             user_doc_list.add(element.id.toString());
-          //print(element.id);
           });
         }
       );
@@ -54,34 +54,30 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
  List<DB> ds;
  var docid;
  final firestore=FirebaseFirestore.instance;
-  final usersref=FirebaseFirestore.instance.collection('users');
- final dlist=FirebaseFirestore.instance.collection('users').where('email',isEqualTo:'email').get().then((value) =>print(value.docs));
-  final userssnapshot=usersref.snapshots().map((snapshot) => snapshot.docs
-        .map((snapshot) => DB.fromJson(snapshot.data()))
-        .toList());
-
    return Consumer<Login_Text_Controllers>(
     builder: (context, value, child) => 
      StreamBuilder(
       stream: firestore.collection('users').where('gmail',isEqualTo: value.email_clr).snapshots(),
-      builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) { 
+    builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) { 
        
         if(snapshot.hasData){
-          var doc= snapshot.data!.docs;
-        checkgmail(){
-                  
-              if(doc.map((e) => e['role'])=='donor'){
-                print(snapshot.data!.docs.map((e) => e['role']));
-                Navigator.of(context).pushReplacementNamed('/donorhome');
-              }
-              else {
-                  print(snapshot.data!.docs.map((e) => e['role']));
-                  print(snapshot.data!.docs.map((e) => e.id));
-
-
-                Navigator.of(context).pushReplacementNamed('/recipienthome');
-                //RecipientHome(docsnapshot.id.toString());
-              }
+          Current_User? current_user;
+          var documents=snapshot.data!.docs;
+        checkgmail()async{
+          //Add to Current User Class
+          snapshot.data!.docs.forEach((e) {
+            current_user=Current_User.fromMap(e.data() as Map<String,dynamic>);
+            });
+          //Check Role
+          if(current_user!.role=='donor'){
+            print('login by donor');
+            Navigator.of(context).pushReplacementNamed('/donorhome');
+          }else{
+            print('login by recipient');
+            Navigator.of(context).pushReplacementNamed('/recipienthome');
+          }
+          
+            
           
         }
         return  Consumer2<Login_Text_Controllers,login_visibleicon_provider>(
@@ -146,9 +142,7 @@ class _ForgroundWidgetState extends State<ForgroundWidget> {
                      decoration: BoxDecoration(
                        color: Colors.black12,
                        borderRadius: BorderRadius.all(Radius.circular(50))
-                     ),
-                        //color: Colors.black26,
-   
+                     ),   
                          child: TextField(
                             style: TextStyle(
                               color: Colors.white

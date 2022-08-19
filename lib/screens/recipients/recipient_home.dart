@@ -268,7 +268,7 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
                                       ),
                                       ),
                                       onPressed: (){
-                                        if(Dish_name_clr.text!=null||Donor_name_clr.text!=null&&price_clr.text!=null&&quantity_clr.text!=null&&description_clr.text!=null){
+                                        if(Dish_name_clr.text.isNotEmpty||Donor_name_clr.text.isNotEmpty&&price_clr.text.isNotEmpty&&quantity_clr.text.isNotEmpty&&description_clr.text.isNotEmpty){
                         
                                       add_dishes(
                                       
@@ -287,7 +287,11 @@ if(dish_name!=null&&donor_name!=null&&price!=null&&quantity!=null&&desc!=null){
                                         description_clr.clear();
                                         price_clr.clear();
                                         }else{
-                                          print('not added');
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text('Field is Empty'),
+                                            )
+                                          );
                                         }
                                       print(Dishes.elementAt(0).donor_name);                                   
                                       },
