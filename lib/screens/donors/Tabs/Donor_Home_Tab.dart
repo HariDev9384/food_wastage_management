@@ -10,7 +10,7 @@ import 'package:food_wastage_management/providers/checkdish.dart';
 import 'package:food_wastage_management/providers/docid.dart';
 import 'package:provider/provider.dart';
 
-HomeTab(double height, double width) {
+DonorHomeTab(double height, double width) {
   var checkavailable=true;
   
     return Consumer2<Login_Text_Controllers,checkdish>(

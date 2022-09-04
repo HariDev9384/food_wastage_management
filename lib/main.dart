@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_wastage_management/providers/DishListProvider.dart';
 import 'package:food_wastage_management/providers/Text_Controllers/login_controllers.dart';
 import 'package:food_wastage_management/providers/bottom_nav_index.dart';
 import 'package:food_wastage_management/providers/checkdish.dart';
@@ -10,13 +11,15 @@ import 'package:food_wastage_management/providers/signup_screen_providers/confir
 import 'package:food_wastage_management/providers/signup_screen_providers/signup_variables_provider.dart';
 import 'package:food_wastage_management/providers/signup_screen_providers/user_types.dart';
 import 'package:food_wastage_management/screens/donors/donor_home.dart';
+import 'package:food_wastage_management/screens/recipients/Tabs/product_details.dart';
 import 'package:food_wastage_management/screens/recipients/recipient_home.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:food_wastage_management/screens/Signup_screen.dart';
 import 'package:food_wastage_management/screens/login_screen.dart';
+
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();                                                          
   await Firebase.initializeApp();
   runApp(
   MultiProvider(
@@ -31,8 +34,8 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (user_types)=>UserTypes()),
     ChangeNotifierProvider(create: (_bottomnavindex)=>BottomNavigationIndex()),
     ChangeNotifierProvider(create: (_currentdoc)=>Current_Doc()),
-    ChangeNotifierProvider(create:  (_checkdish)=>checkdish())
-
+    ChangeNotifierProvider(create:  (_checkdish)=>checkdish()),
+   
   ]
   )
   );
@@ -47,7 +50,8 @@ class MyApp extends StatelessWidget {
         '/login':(context) => Login_Screen(),
         '/signup':(context) =>Signup_Screen(),
         '/donorhome':(context)=>DonorHome(),
-        '/recipienthome':(context)=>RecipientHome()
+        '/recipienthome':(context)=>RecipientHome(),
+        '/productdetails':(context)=>ProductDetails()
       },
       debugShowCheckedModeBanner: false,
       home: Login_Screen(),
